@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Timeline — Partners Relief & Development</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap');
+
+  :root {
+    --pink: #E6007E;
+    --yellow: #F5C518;
+    --ink: #1a1a1a;
+    --ash: #6b6b6b;
+    --line: #e5e5e5;
+    --bg: #faf8f3;
+    --bar-pink: #E6007E;
+    --bar-yellow: #F5C518;
+    --bar-ink: #1a1a1a;
+    --bar-rose: #C04070;
+    --bar-mustard: #D9A40A;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    padding: 48px 32px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .header {
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 24px;
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 32px;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .logo {
+    height: 56px;
+    width: auto;
+  }
+
+  .wordmark {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+
+  .wordmark-name {
+    font-family: 'Inter', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+
+  .wordmark-tag {
+    font-size: 13px;
+    color: var(--ash);
+    margin-top: 4px;
+    letter-spacing: 0.01em;
+  }
+
+  .header-divider {
+    width: 1px;
+    height: 56px;
+    background: var(--line);
+    margin: 0 8px;
+  }
+
+  .header-text h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .header-text .subtitle {
+    color: var(--ash);
+    font-size: 12px;
+    margin-top: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .header-meta {
+    text-align: right;
+    font-size: 12px;
+    color: var(--ash);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .header-meta strong {
+    color: var(--ink);
+    display: block;
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+
+  .team-block {
+    margin-bottom: 28px;
+    padding: 16px 20px;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .team-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ash);
+    font-weight: 600;
+    border-right: 1px solid var(--line);
+    padding-right: 24px;
+  }
+
+  .team-members {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .team-member {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .legend {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ash);
+  }
+
+  .legend-swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 2px;
+  }
+
+  .gantt {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .gantt-header {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    border-bottom: 2px solid var(--ink);
+    background: white;
+  }
+
+  .gantt-header-label {
+    padding: 14px 18px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    color: var(--ash);
+    border-right: 1px solid var(--line);
+  }
+
+  .timeline-axis {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    position: relative;
+  }
+
+  .week-cell {
+    padding: 14px 8px;
+    text-align: center;
+    border-right: 1px solid var(--line);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ash);
+  }
+
+  .week-cell:last-child { border-right: none; }
+
+  .week-cell strong {
+    display: block;
+    color: var(--ink);
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .gantt-row {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    border-bottom: 1px solid var(--line);
+    min-height: 48px;
+    align-items: center;
+  }
+
+  .gantt-row:last-child { border-bottom: none; }
+
+  .gantt-row:hover { background: rgba(230, 0, 126, 0.02); }
+
+  .row-label {
+    padding: 10px 18px;
+    border-right: 1px solid var(--line);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .row-label .task-name {
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 1.3;
+  }
+
+  .row-label .task-meta {
+    font-size: 11px;
+    color: var(--ash);
+    margin-top: 3px;
+    letter-spacing: 0.02em;
+  }
+
+  .row-track {
+    position: relative;
+    height: 48px;
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+  }
+
+  .grid-line {
+    border-right: 1px solid var(--line);
+    height: 100%;
+  }
+
+  .grid-line:last-child { border-right: none; }
+
+  .bar {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 22px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    font-size: 11px;
+    font-weight: 500;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+  }
+
+  .bar.pink { background: var(--bar-pink); }
+  .bar.yellow { background: var(--bar-yellow); color: var(--ink); }
+  .bar.ink { background: var(--bar-ink); }
+  .bar.rose { background: var(--bar-rose); }
+  .bar.mustard { background: var(--bar-mustard); }
+
+  .milestone {
+    position: absolute;
+    top: 50%;
+    width: 14px;
+    height: 14px;
+    background: white;
+    border: 2px solid var(--ink);
+    transform: translate(-50%, -50%) rotate(45deg);
+    z-index: 2;
+  }
+
+  .milestone.pink { border-color: var(--bar-pink); background: var(--bar-pink); }
+  .milestone.yellow { border-color: var(--bar-yellow); background: var(--bar-yellow); }
+
+  .milestone-label {
+    position: absolute;
+    top: calc(50% + 14px);
+    transform: translateX(-50%);
+    font-size: 10px;
+    color: var(--ash);
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-weight: 500;
+  }
+
+  .footer {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--ash);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .footer-key {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+  }
+
+  .diamond-key {
+    width: 8px;
+    height: 8px;
+    background: var(--ink);
+    transform: rotate(45deg);
+    display: inline-block;
+    margin-right: 6px;
+  }
+
+  @media print {
+    body { padding: 16px; background: white; }
+    .gantt-row:hover { background: white; }
+  }
+
+  @media (max-width: 900px) {
+    body { padding: 24px 16px; }
+    .header { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .header-left { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .header-meta { text-align: left; }
+    .gantt-header, .gantt-row { grid-template-columns: 180px 1fr; }
+    .row-label .task-name { font-size: 12px; }
+    .week-cell { font-size: 9px; padding: 10px 4px; }
+    .week-cell strong { font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="header-left">
+        <img src="partners-icon.png" alt="Partners Relief & Development" class="logo">
+        <div class="wordmark">
+          <div class="wordmark-name">Partners</div>
+          <div class="wordmark-tag">Relief & Development</div>
+        </div>
+        <div class="header-divider"></div>
+        <div class="header-text">
+          <h1>Project Timeline</h1>
+          <div class="subtitle">Spring 2026 · Section 02 Team 02</div>
+        </div>
+      </div>
+      <div class="header-meta">
+        <strong>March – May 2026</strong>
+        9-week engagement
+      </div>
+    </div>
+
+    <div class="team-block">
+      <div class="team-label">Team Members</div>
+      <div class="team-members">
+        <div class="team-member">Vitoria Machado Didone</div>
+        <div class="team-member">Neil Pathare</div>
+        <div class="team-member">Chihiro Ueki</div>
+        <div class="team-member">Kate Slaven</div>
+        <div class="team-member">Alexa Gonzales</div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-swatch" style="background: var(--bar-pink);"></div>Strategic Marketing Plan</div>
+      <div class="legend-item"><div class="legend-swatch" style="background: var(--bar-yellow);"></div>Client Engagement</div>
+      <div class="legend-item"><div class="legend-swatch" style="background: var(--bar-ink);"></div>Merch Capsule Development</div>
+      <div class="legend-item"><div class="legend-swatch" style="background: var(--bar-rose);"></div>Elevator Pitch</div>
+      <div class="legend-item"><div class="legend-swatch" style="background: var(--bar-mustard);"></div>Project Report</div>
+    </div>
+
+    <div class="gantt">
+      <div class="gantt-header">
+        <div class="gantt-header-label">Workstream</div>
+        <div class="timeline-axis">
+          <div class="week-cell"><strong>Week 5</strong>Mar 2</div>
+          <div class="week-cell"><strong>Week 6</strong>Mar 9</div>
+          <div class="week-cell"><strong>Week 7</strong>Mar 16</div>
+          <div class="week-cell"><strong>Week 8</strong>Mar 23</div>
+          <div class="week-cell"><strong>Week 9</strong>Mar 30</div>
+          <div class="week-cell"><strong>Week 10</strong>Apr 6</div>
+          <div class="week-cell"><strong>Week 11</strong>Apr 13</div>
+          <div class="week-cell"><strong>Week 12</strong>Apr 20</div>
+          <div class="week-cell"><strong>Week 13</strong>Apr 27</div>
+        </div>
+      </div>
+
+      <div class="gantt-row">
+        <div class="row-label">
+          <div class="task-name">Marketing Plan — Drafting</div>
+          <div class="task-meta">Mar 4 – Mar 13</div>
+        </div>
+        <div class="row-track">
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="bar pink" style="left: 1%; width: 16%;">5C · Strategy · Submit</div>
+        </div>
+      </div>
+
+      <div class="gantt-row">
+        <div class="row-label">
+          <div class="task-name">Marketing Plan — Revisions</div>
+          <div class="task-meta">Mar 24 – Apr 17</div>
+        </div>
+        <div class="row-track">
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="bar pink" style="left: 25%; width: 33%;">Address feedback · Refine sections</div>
+        </div>
+      </div>
+
+      <div class="gantt-row">
+        <div class="row-label">
+          <div class="task-name">Client Meeting Prep</div>
+          <div class="task-meta">Mar 31 – Apr 2</div>
+        </div>
+        <div class="row-track">
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="bar yellow" style="left: 33%; width: 8%;">Prep</div>
+        </div>
+      </div>
+
+      <div class="gantt-row">
+        <div class="row-label">
+          <div class="task-name">Client Call — Allie Vanderlaan</div>
+          <div class="task-meta">Apr 2 (Zoom)</div>
+        </div>
+        <div class="row-track">
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="milestone yellow" style="left: 41%;"></div>
+          <div class="milestone-label" style="left: 41%;">Apr 2</div>
+        </div>
+      </div>
+
+      <div class="gantt-row">
+        <div class="row-label">
+          <div class="task-name">Merch Capsule — Initial Concepts</div>
+          <div class="task-meta">Mar 24 – Apr 2</div>
+        </div>
+        <div class="row-track">
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="bar ink" style="left: 25%; width: 16%;">Brainstorm 5 items · Mockups</div>
+        </div>
+      </div>
+
+      <div class="gantt-row">
+        <div class="row-label">
+          <div class="task-name">Merch Capsule — Refinement</div>
+          <div class="task-meta">Apr 2 – Apr 17</div>
+        </div>
+        <div class="row-track">
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="bar ink" style="left: 41%; width: 22%;">Quarter-zip · Owala · 4-group expansion</div>
+        </div>
+      </div>
+
+      <div class="gantt-row">
+        <div class="row-label">
+          <div class="task-name">Vendor & Pricing Research</div>
+          <div class="task-meta">Apr 28 – May 2</div>
+        </div>
+        <div class="row-track">
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="bar ink" style="left: 89%; width: 10%;">Sourcing · Costs</div>
+        </div>
+      </div>
+
+      <div class="gantt-row">
+        <div class="row-label">
+          <div class="task-name">Elevator Pitch — Slides & Script</div>
+          <div class="task-meta">Apr 20 – Apr 22</div>
+        </div>
+        <div class="row-track">
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="bar rose" style="left: 75%; width: 7%;">Build & draft</div>
+        </div>
+      </div>
+
+      <div class="gantt-row">
+        <div class="row-label">
+          <div class="task-name">Elevator Pitch — Recording</div>
+          <div class="task-meta">Apr 23</div>
+        </div>
+        <div class="row-track">
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="milestone pink" style="left: 83%;"></div>
+          <div class="milestone-label" style="left: 83%;">Apr 23</div>
+        </div>
+      </div>
+
+      <div class="gantt-row">
+        <div class="row-label">
+          <div class="task-name">Project Report — Drafting</div>
+          <div class="task-meta">Apr 28 – May 2</div>
+        </div>
+        <div class="row-track">
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div>
+          <div class="bar mustard" style="left: 89%; width: 10%;">Draft & format</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="footer-key">
+        <span><span class="diamond-key"></span>Diamond marker = Key milestone or single-day event</span>
+      </div>
+      <div>Section 02 · Team 02</div>
+    </div>
+  </div>
+</body>
+</html>
